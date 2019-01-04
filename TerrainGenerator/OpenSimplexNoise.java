@@ -1,3 +1,5 @@
+package TerrainGenerator;
+
 /*
  * OpenSimplex Noise in Java.
  * by Kurt Spencer
