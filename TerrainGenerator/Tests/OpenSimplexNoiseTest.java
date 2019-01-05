@@ -5,6 +5,8 @@ package TerrainGenerator.Tests;
 
 import TerrainGenerator.OpenSimplexNoise;
 
+import java.util.Random;
+
 class OpenSimplexNoiseTest {
 
 	public static void main (String[] args) {
@@ -15,40 +17,52 @@ class OpenSimplexNoiseTest {
 
 	OpenSimplexNoiseTest() {
 
-		OpenSimplexNoise noise = new OpenSimplexNoise();
-		double sum = 0.0;
+		final double width = 960.0;
+		final double height = 640.0;
+		final double totalPixels = width * height;
 
-		double width = 960.0;
-		double height = 640.0;
-		double totalPixels = width * height;
+		final int numberOfRuns = 5;
 
-		double lowestValue = 0.0;
-		double highestValue = 0.0;
+		for (int i = 0; i < numberOfRuns; i++) {
 
-		for (double y = 0.0; y < height; y++) {
+			Random random = new Random();
+			Long seed = random.nextLong();
 
-			for (double x = 0.0; x < width; x++) {
+			OpenSimplexNoise noise = new OpenSimplexNoise(seed);
+			double sum = 0.0;
 
-				double currentValue = noise.eval(x, y);
-				sum += currentValue;
+			double lowestValue = 0.0;
+			double highestValue = 0.0;
 
-				if (currentValue < lowestValue) {
-					lowestValue = currentValue;
-				}
+			for (double y = 0.0; y < height; y++) {
 
-				if (currentValue > highestValue) {
-					highestValue = currentValue;
+				for (double x = 0.0; x < width; x++) {
+
+					double currentValue = noise.eval(x, y);
+					sum += currentValue;
+
+					if (currentValue < lowestValue) {
+						lowestValue = currentValue;
+					}
+
+					if (currentValue > highestValue) {
+						highestValue = currentValue;
+					}
+
 				}
 
 			}
 
+			double average = sum / totalPixels;
+
+			System.out.println("Run " + (i+1));
+			System.out.println("Seed: " + seed);
+			System.out.println("Average value: " + average);
+			System.out.println("Lowest value: " + lowestValue);
+			System.out.println("Hightest value: " + highestValue);
+			System.out.println();
+
 		}
-
-		double average = sum / totalPixels;
-
-		System.out.println("Average value: " + average);
-		System.out.println("Lowest value: " + lowestValue);
-		System.out.println("Highest value: " + highestValue);
 
 	}
 
