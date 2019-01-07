@@ -32,7 +32,7 @@ class NoiseGeneratorTest {
 		final int octaves = 5;
 		final double persistence = 0.5;
 		final double lacunarity = 2.0;
-		final boolean stretchNoise = false;
+		final boolean stretchNoise = true;
 
 		Random random = new Random();
 		final int numberOfRuns = 5;
@@ -113,15 +113,15 @@ class NoiseGeneratorTest {
 
 			System.out.println("\nAverage raw value: " + rawAverage);
 			System.out.println("Lowest raw value: " + rawLowestValue);
-			System.out.println("Hightest raw value: " + rawHighestValue);
+			System.out.println("Highest raw value: " + rawHighestValue);
 
 			System.out.println("\nAverage normalized value: " + normalizedAverage);
 			System.out.println("Lowest normalized value: " + normalizedLowestValue);
-			System.out.println("Hightest normalized value: " + normalizedHighestValue);
+			System.out.println("Highest normalized value: " + normalizedHighestValue);
 
 			System.out.println("\nAverage value: " + noiseAverage);
 			System.out.println("Lowest value: " + noiseLowestValue);
-			System.out.println("Hightest value: " + noiseHighestValue);
+			System.out.println("Highest value: " + noiseHighestValue);
 			System.out.println();
 
 		}

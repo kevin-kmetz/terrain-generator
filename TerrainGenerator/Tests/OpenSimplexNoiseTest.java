@@ -97,7 +97,7 @@ class OpenSimplexNoiseTest {
 
 			System.out.println("\nAverage value: " + average);
 			System.out.println("Lowest value: " + lowestValue);
-			System.out.println("Hightest value: " + highestValue);
+			System.out.println("Highest value: " + highestValue);
 
 			System.out.println("\nAverage adjusted value: " + adjustedAverage);
 			System.out.println("Lowest adjusted value: " + adjustedLowestValue);
