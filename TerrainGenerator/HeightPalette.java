@@ -16,14 +16,19 @@ public class HeightPalette {
 
 	public void add(int newHeight, Color newColor) {
 
-		if (heights.indexOf(newHeight) != -1) {
+		if (heights.size() == 0) {
 
+			heights.add(newHeight);
+			colors.add(newColor);
+
+		} else if (heights.indexOf(Integer.valueOf(newHeight)) != -1) {
+		
 			colors.set(heights.indexOf(Integer.valueOf(newHeight)), newColor);
 
 		} else {
 
 			boolean inserted = false;
-			for (int i = 0; i < heights.size() && inserted == false; i++) {
+			for (int i = 0, currentSize = heights.size(); i < currentSize && inserted == false; i++) {
 
 				if (newHeight < heights.get(i)) {
 
@@ -75,10 +80,12 @@ public class HeightPalette {
 			int tempHeight = heights.get(i);
 			Color tempColor = colors.get(i);
 
-			System.out.print("Index " + i + " -  height: " + tempHeight);
+			System.out.print("Index " + i + " -\theight: " + tempHeight);
 			System.out.println("\tcolor: " + tempColor.getRed() + ":" + tempColor.getGreen() + ":" + tempColor.getBlue());
 
 		}
+
+		System.out.println();
 
 	}
 
