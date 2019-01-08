@@ -1,0 +1,85 @@
+package TerrainGenerator;
+
+import java.awt.Color;
+import java.util.LinkedList;
+
+public class HeightPalette {
+
+	private LinkedList<Integer> heights = new LinkedList<Integer>();
+	private LinkedList<Color> colors = new LinkedList<Color>();
+
+	public HeightPalette() {
+
+		add(0, new Color(Color.MAGENTA.getRGB()));
+
+	}
+
+	public void add(int newHeight, Color newColor) {
+
+		if (heights.indexOf(newHeight) != -1) {
+
+			colors.set(heights.indexOf(Integer.valueOf(newHeight)), newColor);
+
+		} else {
+
+			boolean inserted = false;
+			for (int i = 0; i < heights.size() && inserted == false; i++) {
+
+				if (newHeight < heights.get(i)) {
+
+					heights.add(i, newHeight);
+					colors.add(i, newColor);
+
+					inserted = true;
+
+				} else if (i == heights.size() - 1 ) {
+
+					heights.add(newHeight);
+					colors.add(newColor);
+
+				}
+
+			}
+
+		}
+
+	}
+
+	public Color getColor(int height) {
+
+		Color color = new Color(Color.YELLOW.getRGB());
+
+		boolean colorFound = false;
+		for (int i = heights.size()-1; i >= 0 && colorFound == false; i--) {
+
+			if (height >= heights.get(i)) {
+
+				color = colors.get(i);
+				colorFound = true;
+
+			}
+
+		}
+
+		return color;
+
+	}
+
+	public void display() {
+
+		System.out.println("Number of entries: " + heights.size());
+		System.out.println();
+
+		for (int i = 0; i < heights.size(); i++) {
+
+			int tempHeight = heights.get(i);
+			Color tempColor = colors.get(i);
+
+			System.out.print("Index " + i + " -  height: " + tempHeight);
+			System.out.println("\tcolor: " + tempColor.getRed() + ":" + tempColor.getGreen() + ":" + tempColor.getBlue());
+
+		}
+
+	}
+
+}
