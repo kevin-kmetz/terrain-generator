@@ -1,6 +1,6 @@
 package TerrainGenerator;
 
-import java.util.LinkedList;
+import java.util.Arrays;
 
 public class Raster {
 
@@ -133,6 +133,107 @@ public class Raster {
 		}
 
 		System.arraycopy(updatedRaster, 0, raster, 0, raster.length);
+
+	}
+
+	public void appendLeft(int[] column) {
+
+		int[][] updatedRaster = new int[height][width];
+
+		for (int i = 0; i < height; i++) {
+
+			int[] tempRow = concat(column[i], Arrays.copyOf(raster[i], width-1));
+			System.arraycopy(tempRow, 0, updatedRaster[i], 0, width);
+
+		}
+
+		System.arraycopy(updatedRaster, 0, raster, 0, raster.length);
+
+	}
+
+	public void appendLeft(int[][] rows) {
+
+		int[][] updatedRaster = new int[height][width];
+
+		int rowLength = rows[0].length;
+		int numberOfRows = rows.length;
+
+		for (int i = 0; i < numberOfRows; i++) {
+
+			int[] tempRow = concat(rows[i], Arrays.copyOf(raster[i], width-rowLength));
+			System.arraycopy(tempRow, 0, updatedRaster[i], 0, width);
+
+		}
+
+		System.arraycopy(updatedRaster, 0, raster, 0, height);
+
+	}
+
+	public void appendRight(int[] column) {
+
+		int[][] updatedRaster = new int[height][width];
+
+		for (int i = 0; i < height; i++) {
+
+			int[] tempRow = concat(Arrays.copyOfRange(raster[i], 1, width), column[i]);
+			System.arraycopy(tempRow, 0, updatedRaster[i], 0, width);
+
+		}
+
+		System.arraycopy(updatedRaster, 0, raster, 0, raster.length);
+
+	}
+
+	public void appendRight(int[][] rows) {
+
+		int[][] updatedRaster = new int[height][width];
+
+		int rowLength = rows[0].length;
+		int numberOfRows = rows.length;
+
+		for (int i = 0; i < numberOfRows; i++) {
+
+			int[] tempRow = concat(Arrays.copyOfRange(raster[i], rowLength, width), rows[i]);
+			System.arraycopy(tempRow, 0, updatedRaster[i], 0, width);
+
+		}
+
+		System.arraycopy(updatedRaster, 0, raster, 0, height);
+
+	}
+
+	private int[] concat(int[] firstArray, int[] secondArray) {
+
+		int[] mergedArray = new int[firstArray.length + secondArray.length];
+
+		System.arraycopy(firstArray, 0, mergedArray, 0, firstArray.length);
+		System.arraycopy(secondArray, 0, mergedArray, firstArray.length, secondArray.length);
+
+		return mergedArray;
+
+	}
+
+	private int[] concat(int value, int[] array) {
+
+		int[] mergedArray = new int[1 + array.length];
+
+		mergedArray[0] = value;
+
+		System.arraycopy(array, 0, mergedArray, 1, array.length);
+
+		return mergedArray;
+
+	}
+
+	private int[] concat(int[] array, int value) {
+
+		int[] mergedArray = new int[array.length + 1];
+
+		mergedArray[mergedArray.length-1] = value;
+
+		System.arraycopy(array, 0, mergedArray, 0, array.length);
+
+		return mergedArray;
 
 	}
 

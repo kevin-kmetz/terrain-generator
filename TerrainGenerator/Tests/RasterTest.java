@@ -74,6 +74,43 @@ class RasterTest {
 		System.out.println();
 		raster.display();
 
+		// Test adding a column to the left side of the raster.
+		int[] tempColumn = new int[height];
+		Arrays.fill(tempColumn, 88);
+		raster.appendLeft(tempColumn);
+
+		System.out.println();
+		raster.display();
+
+		// Test adding three columns to the left side of the raster.
+		int[][] tempColumns = new int[height][3];
+
+		for (int[] i : tempColumns) {
+			Arrays.fill(i, 66);
+		}
+
+		raster.appendLeft(tempColumns);
+
+		System.out.println();
+		raster.display();
+
+		// Test adding a column to the right side of the raster.
+		Arrays.fill(tempColumn, 44);
+		raster.appendRight(tempColumn);
+
+		System.out.println();
+		raster.display();
+
+		// Test adding three columns to right side of the raster.
+		for (int[] i : tempColumns){
+			Arrays.fill(i, 22);
+		}
+
+		raster.appendRight(tempColumns);
+
+		System.out.println();
+		raster.display();
+
 	}
 
 }
