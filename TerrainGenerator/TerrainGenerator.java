@@ -1,5 +1,10 @@
 package TerrainGenerator;
 
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import javax.imageio.ImageIO;
+
 public class TerrainGenerator {
 
 	private HeightPalette palette;
@@ -30,7 +35,7 @@ public class TerrainGenerator {
 	private static final double DEFAULT_PERSISTENCE = 0.5;
 	private static final double DEFAULT_LACUNARITY = 2.0;
 	private static final long DEFAULT_SEED = 0L;
-	private static final boolean DEFAULT_UTILIZE_STRETCH = false;
+	private static final boolean DEFAULT_UTILIZE_STRETCH = true;
 
 	private static final int DEFAULT_X_POSITION = 0;
 	private static final int DEFAULT_Y_POSITION = 0;
@@ -42,7 +47,7 @@ public class TerrainGenerator {
 		yLength = DEFAULT_Y_LENGTH;
 
 		highestValue = DEFAULT_HIGHEST_VALUE;
-		lowestValue = DEFAULT_HIGHEST_VALUE;
+		lowestValue = DEFAULT_LOWEST_VALUE;
 		octaves = DEFAULT_OCTAVES;
 		persistence = DEFAULT_PERSISTENCE;
 		lacunarity = DEFAULT_LACUNARITY;
@@ -90,6 +95,53 @@ public class TerrainGenerator {
 		generator = new NoiseGenerator(highestValue, lowestValue, octaves, persistence, lacunarity, seed, utilizeStretch);
 
 		heightRaster = new Raster(xLength, yLength);
+
+	}
+
+	public void generateTerrain() {
+
+		for (int yRaster = 0, yPos = yPosition; yPos < yLength + yPosition; yRaster++, yPos++) {
+
+			for (int xRaster = 0, xPos = xPosition; xPos < xLength + xPosition; xRaster++, xPos++) {
+
+				heightRaster.set(xRaster, yRaster, (int) generator.getNoise( (double) xPos/scale, (double) yPos/scale));
+
+			}
+
+		}
+
+		outputImage();
+
+	}
+
+	public void outputImage() {
+
+		BufferedImage mapImage = new BufferedImage(xLength, yLength, BufferedImage.TYPE_INT_RGB);
+
+		for (int y = 0; y < yLength; y++) {
+
+			for (int x = 0; x < xLength; x++) {
+
+				Color tempColor = palette.getColor(heightRaster.get(x, y));
+				mapImage.setRGB(x, y, tempColor.getRGB());
+
+			}
+
+		}
+
+		try {
+
+				String fileName = "TerrainMap.png";
+				File outputFile = new File(fileName);
+				outputFile.createNewFile();
+
+				ImageIO.write(mapImage, "png", outputFile);
+
+			} catch (Exception e) {
+
+				System.out.println("Error - unable to output image!");
+
+			}
 
 	}
 
