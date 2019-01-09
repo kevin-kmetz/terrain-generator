@@ -60,11 +60,16 @@ public class Raster {
 
 		int[][] updatedRaster = new int[height][width];
 
-		System.arraycopy(row, 0, updatedRaster[0], 0, updatedRaster[0].length);
+		int rowsToAppend = 1;
+		int rowsToShiftDown = height - rowsToAppend;
 
-		for (int i = 0; i < raster.length-1; i++) {
-			System.arraycopy(raster[i], 0, updatedRaster[i+1], 0, raster[i].length);
+		// Shift rows to preserve down.
+		for (int insertionIndex = height - rowsToShiftDown, oldRasterIndex = 0; insertionIndex < height; insertionIndex++, oldRasterIndex++) {
+			System.arraycopy(raster[oldRasterIndex], 0, updatedRaster[insertionIndex], 0, width);
 		}
+
+		// Insert single new row at the top of the raster.
+		System.arraycopy(row, 0, updatedRaster[0], 0, width);
 
 		System.arraycopy(updatedRaster, 0, raster, 0, raster.length);
 
@@ -74,12 +79,17 @@ public class Raster {
 
 		int[][] updatedRaster = new int[height][width];
 
-		for (int i = 0; i < rows.length; i++) {
-			System.arraycopy(rows[i], 0, updatedRaster[i], 0, updatedRaster[i].length);
+		int rowsToAppend = rows.length;
+		int rowsToShiftDown = height - rowsToAppend;
+
+		// Shift rows to preserve down.
+		for (int insertionIndex = height - rowsToShiftDown, oldRasterIndex = 0; insertionIndex < height; insertionIndex++, oldRasterIndex++) {
+			System.arraycopy(raster[oldRasterIndex], 0, updatedRaster[insertionIndex], 0, width);
 		}
 
-		for (int i = rows.length; i < height; i++) {
-			System.arraycopy(raster[i-rows.length], 0, updatedRaster[i], 0, updatedRaster[i].length);
+		// Insert new rows at the top of the raster.
+		for (int insertionIndex = 0, rowIndex = 0; rowIndex < rowsToAppend; insertionIndex++, rowIndex++) {
+			System.arraycopy(rows[rowIndex], 0, updatedRaster[insertionIndex], 0, width);
 		}
 
 		System.arraycopy(updatedRaster, 0, raster, 0, raster.length);
