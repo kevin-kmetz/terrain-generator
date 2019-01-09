@@ -50,6 +50,14 @@ public class HeightPalette {
 
 	}
 
+	public void add(int newHeight, int red, int green, int blue) {
+
+		Color color = new Color(red, green, blue);
+
+		add(newHeight, color);
+
+	}
+
 	public Color getColor(int height) {
 
 		Color color = new Color(Color.YELLOW.getRGB());
