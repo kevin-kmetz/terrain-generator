@@ -55,6 +55,25 @@ class RasterTest {
 		System.out.println();
 		raster.display();
 
+		// Test adding a row to the bottom of the raster.
+		Arrays.fill(tempArray, 55);
+		raster.appendBottom(tempArray);
+
+		System.out.println();
+		raster.display();
+
+		// Test adding three rows to the bottom of the raster.
+		tempMultiArray = new int [3][width];
+
+		for (int[] i : tempMultiArray) {
+			Arrays.fill(i, 33);
+		}
+
+		raster.appendBottom(tempMultiArray);
+
+		System.out.println();
+		raster.display();
+
 	}
 
 }
