@@ -11,6 +11,8 @@ public class TerrainGenerator {
 	private NoiseGenerator generator;
 	private Raster heightRaster;
 
+	private Gradient gradient;
+
 	private int xLength;
 	private int yLength;
 
@@ -71,6 +73,8 @@ public class TerrainGenerator {
 
 		heightRaster = new Raster(xLength, yLength);
 
+		gradient = new Gradient(0, 0, 0, 255, 255, 0);
+
 	}
 
 	public TerrainGenerator(int xLength, int yLength, int highestValue, int lowestValue, int octaves, double persistence, double lacunarity, long seed, boolean utilizeStretch, HeightPalette palette) {
@@ -96,6 +100,8 @@ public class TerrainGenerator {
 
 		heightRaster = new Raster(xLength, yLength);
 
+		gradient = new Gradient(0, 0, 0, 255, 255, 0);
+
 	}
 
 	public void generateTerrain() {
@@ -114,7 +120,7 @@ public class TerrainGenerator {
 
 	}
 
-	public void outputImage() {
+	public void outputImage(String fileName) {
 
 		BufferedImage mapImage = new BufferedImage(xLength, yLength, BufferedImage.TYPE_INT_RGB);
 
@@ -131,7 +137,6 @@ public class TerrainGenerator {
 
 		try {
 
-				String fileName = "TerrainMap.png";
 				File outputFile = new File(fileName);
 				outputFile.createNewFile();
 
@@ -145,7 +150,58 @@ public class TerrainGenerator {
 
 	}
 
-	public void setGeneratorToDefaults() {
+	public void outputImage() {
+
+		outputImage("TerrainMap_s" + seed + "x" + xPosition + "y" + yPosition + "o" + octaves + "p" + persistence + "l" + lacunarity + ".png");
+
+	}
+
+	public void outputGradientImage(String fileName) {
+
+		BufferedImage mapImage = new BufferedImage(xLength, yLength, BufferedImage.TYPE_INT_RGB);
+
+		for (int y = 0; y < yLength; y++) {
+
+			for (int x = 0; x < xLength; x++) {
+
+				Color tempColor = gradient.getColor(heightRaster.get(x, y));
+				mapImage.setRGB(x, y, tempColor.getRGB());
+
+			}
+
+		}
+
+		try {
+
+				File outputFile = new File(fileName);
+				outputFile.createNewFile();
+
+				ImageIO.write(mapImage, "png", outputFile);
+
+			} catch (Exception e) {
+
+				System.out.println("Error - unable to output image!");
+
+			}
+
+	}
+
+	public void outputGradientImage() {
+
+		outputGradientImage("TerrainMap_s" + seed + "x" + xPosition + "y" + yPosition + "o" + octaves + "p" + persistence + "l" + lacunarity + "_Gr.png");
+
+	}
+
+	public void setGradient(Gradient gradient) {
+
+		this.gradient = gradient;
+
+	}
+
+	public void setGeneratorToDefaults(int firstRed, int firstGreen, int firstBlue, int secondRed, int secondGreen, int secondBlue) {
+
+		Gradient tempGradient = new Gradient(firstRed, firstGreen, firstBlue, secondRed, secondGreen, secondBlue);
+		setGradient(tempGradient);
 
 	}
 
