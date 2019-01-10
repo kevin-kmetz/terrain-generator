@@ -55,15 +55,27 @@ class TerrainGeneratorTest {
 		palette.add(215, 75, 50, 20);
 		palette.add(238, 255, 255, 255);*/
 
-		palette.add(0, 15, 0, 80);
+		/*palette.add(0, 15, 0, 80);
 		palette.add(115, 35, 0, 190);
 		palette.add(165, 255, 230,175);
 		palette.add(175, 85, 220, 75);
 		palette.add(195, 60, 150, 50);
 		palette.add(215, 75, 50, 20);
-		palette.add(242, 255, 255, 255);
+		palette.add(242, 255, 255, 255);*/
+
+		/*for (int i = 0, r = random.nextInt(30)+1; i < r; i++) {
+
+			palette.add(random.nextInt(256), random.nextInt(256), random.nextInt(256), random.nextInt(256));
+
+		}*/
 
 		for (int i = 0; i < 100; i++) {
+
+			for (int k = 0, r = random.nextInt(256)+1; k < r; k++) {
+
+			palette.add(random.nextInt(256), random.nextInt(256), random.nextInt(256), random.nextInt(256));
+
+			}
 
 			TerrainGenerator tempGenerator = new TerrainGenerator(960, 640, 255, 0, random.nextInt(8)+1, random.nextDouble(), random.nextDouble()*3, random.nextLong(), true, palette);
 			Gradient tempGradient = new Gradient(random.nextInt(256), random.nextInt(256), random.nextInt(256), random.nextInt(256), random.nextInt(256), random.nextInt(256));
@@ -74,6 +86,8 @@ class TerrainGeneratorTest {
 			tempGenerator.outputGradientImage();
 
 			System.out.print(".");
+
+			palette.reset();
 
 		}
 

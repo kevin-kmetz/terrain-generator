@@ -8,9 +8,11 @@ public class HeightPalette {
 	private LinkedList<Integer> heights = new LinkedList<Integer>();
 	private LinkedList<Color> colors = new LinkedList<Color>();
 
+	private Color DEFAULT_COLOR = new Color(Color.MAGENTA.getRGB());
+
 	public HeightPalette() {
 
-		add(0, new Color(Color.MAGENTA.getRGB()));
+		add(0, new Color(DEFAULT_COLOR.getRGB()));
 
 	}
 
@@ -94,6 +96,15 @@ public class HeightPalette {
 		}
 
 		System.out.println();
+
+	}
+
+	public void reset(){
+
+		heights = new LinkedList<Integer>();
+		colors = new LinkedList<Color>();
+
+		add(0, new Color(DEFAULT_COLOR.getRGB()));
 
 	}
 
