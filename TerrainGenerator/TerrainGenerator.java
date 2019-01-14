@@ -175,6 +175,25 @@ public class TerrainGenerator {
 
 	}
 
+	public BufferedImage getGradientImage() {
+
+		BufferedImage mapImage = new BufferedImage(xLength, yLength, BufferedImage.TYPE_INT_RGB);
+
+		for (int y = 0; y < yLength; y++) {
+
+			for (int x = 0; x < xLength; x++) {
+
+				Color tempColor = gradient.getColor(heightRaster.get(x, y));
+				mapImage.setRGB(x, y, tempColor.getRGB());
+
+			}
+
+		}
+
+		return mapImage;
+
+	}
+
 	public void outputGradientImage(String fileName) {
 
 		BufferedImage mapImage = new BufferedImage(xLength, yLength, BufferedImage.TYPE_INT_RGB);
