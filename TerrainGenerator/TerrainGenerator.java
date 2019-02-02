@@ -243,4 +243,11 @@ public class TerrainGenerator {
 
 	}
 
+	public void setPosition(int x, int y) {
+
+		xPosition = x;
+		yPosition = y;
+
+	}
+
 }

@@ -18,6 +18,9 @@ class TerrainViewer {
 	private HeightPalette palette = new HeightPalette();
 	private Image image;
 
+	private int xPosition = 0;
+	private int yPosition = 0;
+
 	public static void main(String[] args) {
 
 		TerrainViewer viewer = new TerrainViewer();
@@ -79,7 +82,19 @@ class TerrainViewer {
 			if (keyPressCharacter == 'n') {
 
 				System.out.println("Inside KeyListener");
+				xPosition = 0;
+				yPosition = 0;
 				generator = new TerrainGenerator(960, 640, 255, 0, 5, 0.5, 2.0, random.nextLong(), true, palette);
+				generator.generateTerrain();
+				image = generator.getImage();
+				Graphics graphic = canvas.getGraphics();
+				graphic.drawImage(image, 0, 0, null);
+				canvas.paint(graphic);
+
+			} else if (keyPressCharacter == 'a') {
+
+				xPosition -= 50;
+				generator.setPosition(xPosition, yPosition);
 				generator.generateTerrain();
 				image = generator.getImage();
 				Graphics graphic = canvas.getGraphics();
